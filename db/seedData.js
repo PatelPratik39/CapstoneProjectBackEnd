@@ -295,7 +295,6 @@ async function createInitialReviews() {
   try {
     console.log("Starting to create reviews...");
 
-    // bike_id INTEGER REFERENCES bikes(id), user_id INTEGER REFERENCES users(id), rental_date_from DATE, rental_date_to DATE, total_price DECIMAL(10,2)
     const reviewsToCreate = [
       {
         movie_id: 1,
