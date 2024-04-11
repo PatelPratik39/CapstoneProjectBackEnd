@@ -1,5 +1,5 @@
 const client = require("./client");
-
+// const express =  require('express');
 const { createUser, createMovie, createReview } = require("./");
 // drop all tables if any exist
 async function dropTables() {
