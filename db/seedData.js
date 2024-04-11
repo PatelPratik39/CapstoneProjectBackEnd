@@ -1,10 +1,6 @@
 const client = require("./client");
 
 const { createUser, createMovie, createReview } = require("./");
-/*
-rentals - > reviews
-bikes -> movie
-*/
 // drop all tables if any exist
 async function dropTables() {
   try {
@@ -50,23 +46,6 @@ async function createTables() {
           );
       `);
 
-    /*
-need to get clear idea, what do we need instead of release dates
-rental_date_from DATE,  
-rental_date_to DATE,
-
-
-review_id SERIAL PRIMARY KEY,
-    movie_id INTEGER NOT NULL,
-    reviewer_name VARCHAR(100) NOT NULL,
-    rating INTEGER NOT NULL,
-    review_text TEXT,
-    review_date DATE,
-    CONSTRAINT fk_movie
-        FOREIGN KEY (movie_id)
-        REFERENCES movies (movie_id)
-        ON DELETE CASCADE
-*/
     // need to insert a query for rating stars out of 5 range
     await client.query(`
         CREATE TABLE reviews (
@@ -292,7 +271,6 @@ async function createInitialMovies() {
         plot: "Spanning the years 1945 to 1955, a chronicle of the fictional Italian-American Corleone crime family. When organized crime family patriarch, Vito Corleone barely survives an attempt on his life, his youngest son, Michael steps in to take care of the would-be killers, launching a campaign of bloody revenge."
       }
     ];
-
 
     const movies = await Promise.all(
       moviesToCreate.map((movie) => {
