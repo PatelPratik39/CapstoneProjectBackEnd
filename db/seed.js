@@ -1,8 +1,9 @@
 // Helper Function for our App
 
 const client = require("./client");
-const { rebuildDB, testDB } = require("/seedData");
+const { rebuildDB } = require("./seedData");
+// const seedData = require("./db/seedData");
 
 rebuildDB()
-  .catch(console.log("An Error Occured ! "))
-  .finaly(() => client.end());
+  .catch(console.error)
+  .finally(() => client.end());

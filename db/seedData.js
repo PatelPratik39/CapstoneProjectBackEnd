@@ -1,10 +1,9 @@
 const client = require("./client");
 
-const { createUser, createMovie, createReview } = require("./");
-/*
-rentals - > reviews
-bikes -> movie
-*/
+// const { createUser, createMovie, createReview } = require("./");
+const { createReview } = require("./reviews");
+const { createUser } = require("./users");
+const { createMovie } = require("./movies");
 // drop all tables if any exist
 async function dropTables() {
   try {
@@ -40,43 +39,26 @@ async function createTables() {
         `);
 
     await client.query(`
-        CREATE TABLE movies (
+            CREATE TABLE movies (
             id SERIAL PRIMARY KEY,
-            title TEXT
+            title TEXT,
             release_date DATE,
-            category TEXT
+            category TEXT,
             description TEXT,
             poster_url TEXT,
+            plot TEXT
           );
-      `);
-
-    /*
-need to get clear idea, what do we need instead of release dates
-rental_date_from DATE,  
-rental_date_to DATE,
-
-
-review_id SERIAL PRIMARY KEY,
-    movie_id INTEGER NOT NULL,
-    reviewer_name VARCHAR(100) NOT NULL,
-    rating INTEGER NOT NULL,
-    review_text TEXT,
-    review_date DATE,
-    CONSTRAINT fk_movie
-        FOREIGN KEY (movie_id)
-        REFERENCES movies (movie_id)
-        ON DELETE CASCADE
-*/
+          `);
     // need to insert a query for rating stars out of 5 range
     await client.query(`
         CREATE TABLE reviews (
-            id SERIAL PRIMARY KEY,
-            movie_id INTEGER REFERENCES movie(id),
-            user_id INTEGER REFERENCES users(id),
-            rating INTEGER,
-            comment TEXT,
-            review_date DATE
-          );
+        id SERIAL PRIMARY KEY,
+        movie_id INTEGER REFERENCES movies(id),
+        user_id INTEGER REFERENCES users(id),
+        rating INTEGER,
+        comment TEXT,
+        review_date DATE
+        );
         `);
 
     console.log("Finished building tables!");
@@ -293,7 +275,6 @@ async function createInitialMovies() {
       }
     ];
 
-
     const movies = await Promise.all(
       moviesToCreate.map((movie) => {
         return createMovie({
@@ -305,6 +286,7 @@ async function createInitialMovies() {
         });
       })
     );
+    console.log(movies);
 
     console.log("Movies created:");
   } catch (error) {
@@ -317,27 +299,26 @@ async function createInitialReviews() {
   try {
     console.log("Starting to create reviews...");
 
-    // bike_id INTEGER REFERENCES bikes(id), user_id INTEGER REFERENCES users(id), rental_date_from DATE, rental_date_to DATE, total_price DECIMAL(10,2)
     const reviewsToCreate = [
       {
         movie_id: 1,
         user_id: 2,
         rating: 4,
-        review_text: "Great movie, loved the storyline!",
+        comment: "Great movie, loved the storyline!",
         review_date: "2021-01-01"
       },
       {
         movie_id: 2,
         user_id: 3,
         rating: 5,
-        review_text: "One of the best movies I've ever seen!",
+        comment: "One of the best movies I've ever seen!",
         review_date: "2021-01-02"
       },
       {
         movie_id: 3,
         user_id: 1,
         rating: 3,
-        review_text: "Decent movie, could have been better.",
+        comment: "Decent movie, could have been better.",
         review_date: "2021-01-03"
       }
     ];
@@ -347,13 +328,13 @@ async function createInitialReviews() {
           movie_id: review.movie_id,
           user_id: review.user_id,
           rating: review.rating,
-          review_text: review.review_text,
+          comment: review.comment,
           review_date: review.review_date
         });
       })
     );
 
-    console.log("Reviews created:");
+    console.log("Reviews created:", reviews);
   } catch (error) {
     throw error;
   }
@@ -363,7 +344,6 @@ async function createInitialReviews() {
 async function rebuildDB() {
   try {
     client.connect();
-
     await dropTables();
     await createTables();
     await createInitialUsers();
