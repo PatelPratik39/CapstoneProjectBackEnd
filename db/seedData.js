@@ -1,6 +1,9 @@
 const client = require("./client");
-// const express =  require('express');
-const { createUser, createMovie, createReview } = require("./");
+
+// const { createUser, createMovie, createReview } = require("./");
+const { createReview } = require("./reviews");
+const { createUser } = require("./users");
+const { createMovie } = require("./movies");
 // drop all tables if any exist
 async function dropTables() {
   try {
@@ -36,26 +39,26 @@ async function createTables() {
         `);
 
     await client.query(`
-        CREATE TABLE movies (
+            CREATE TABLE movies (
             id SERIAL PRIMARY KEY,
-            title TEXT
+            title TEXT,
             release_date DATE,
-            category TEXT
+            category TEXT,
             description TEXT,
             poster_url TEXT,
+            plot TEXT
           );
-      `);
-
+          `);
     // need to insert a query for rating stars out of 5 range
     await client.query(`
         CREATE TABLE reviews (
-            id SERIAL PRIMARY KEY,
-            movie_id INTEGER REFERENCES movie(id),
-            user_id INTEGER REFERENCES users(id),
-            rating INTEGER,
-            comment TEXT,
-            review_date DATE
-          );
+        id SERIAL PRIMARY KEY,
+        movie_id INTEGER REFERENCES movies(id),
+        user_id INTEGER REFERENCES users(id),
+        rating INTEGER,
+        comment TEXT,
+        review_date DATE
+        );
         `);
 
     console.log("Finished building tables!");
@@ -283,6 +286,7 @@ async function createInitialMovies() {
         });
       })
     );
+    console.log(movies);
 
     console.log("Movies created:");
   } catch (error) {
@@ -340,7 +344,6 @@ async function createInitialReviews() {
 async function rebuildDB() {
   try {
     client.connect();
-
     await dropTables();
     await createTables();
     await createInitialUsers();
