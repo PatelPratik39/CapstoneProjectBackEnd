@@ -17,11 +17,5 @@
     "express": "^4.19.2",
 <<<<<<< HEAD
     "mongoose": "^8.3.1"
-    
-=======
-    "mongoose": "^8.3.1",
-    "pg": "^8.11.5",
-    "postgres": "^3.4.4"
->>>>>>> adea213fac64da3a957f6362162cde3024eba9ea
   }
 }
