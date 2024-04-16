@@ -304,21 +304,21 @@ async function createInitialReviews() {
         movie_id: 1,
         user_id: 2,
         rating: 4,
-        review_text: "Great movie, loved the storyline!",
+        comment: "Great movie, loved the storyline!",
         review_date: "2021-01-01"
       },
       {
         movie_id: 2,
         user_id: 3,
         rating: 5,
-        review_text: "One of the best movies I've ever seen!",
+        comment: "One of the best movies I've ever seen!",
         review_date: "2021-01-02"
       },
       {
         movie_id: 3,
         user_id: 1,
         rating: 3,
-        review_text: "Decent movie, could have been better.",
+        comment: "Decent movie, could have been better.",
         review_date: "2021-01-03"
       }
     ];
@@ -328,13 +328,13 @@ async function createInitialReviews() {
           movie_id: review.movie_id,
           user_id: review.user_id,
           rating: review.rating,
-          review_text: review.review_text,
+          comment: review.comment,
           review_date: review.review_date
         });
       })
     );
 
-    console.log("Reviews created:");
+    console.log("Reviews created:", reviews);
   } catch (error) {
     throw error;
   }
