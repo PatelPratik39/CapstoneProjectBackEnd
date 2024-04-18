@@ -18,4 +18,4 @@ function dbFields(fields) {
     dbFields
   }
 
-  // NEED TO LOOK AT SALS DEMO CODE AND ADD MORE TO THIS FILE!!
+  

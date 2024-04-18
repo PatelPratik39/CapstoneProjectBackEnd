@@ -1,9 +1,9 @@
 const client = require("./client");
-// const util = require("util");
+const util = require("util");
 
 // database functions
 // get all movies
-async function getAllmovies() {
+async function getAllMovies() {
   try {
     const { rows } = await client.query(`
         SELECT *
@@ -133,7 +133,7 @@ async function deleteMovieById(movieId) {
 }
 
 // delete all movies
-async function deleteAllmovies() {
+async function deleteAllMovies() {
   try {
     const { rows } = await client.query(`
         DELETE FROM movies;
@@ -146,10 +146,10 @@ async function deleteAllmovies() {
 
 // export functions
 module.exports = {
-  getAllmovies,
+  getAllMovies,
   getMovieById,
   createMovie,
   updateMovieById,
   deleteMovieById,
-  deleteAllmovies
+  deleteAllMovies
 };

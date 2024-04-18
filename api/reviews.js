@@ -1,110 +1,115 @@
-////THIS IS DEMO CODE! NEED TO REPLACE WITH OUR CODE!!
+////I replaced this code!! Check it out!!
 const express = require('express');
 const router = express.Router();
-const { getAllRentals,
-    getRentalById,
-    createRental,
-    updateRentalById,
-    deleteRentalById, deleteAllRentals, getBikeById } = require('../db');
-const { requireUser, calculateRentalPrice, checkRentalExists } = require('./utils');
+const { getAllReviews,
+    getReviewById,
+    createReview,
+    updateReviewById,
+    deleteReviewById, deleteAllReviews, getMovieById } = require('../db');
+    //NOT SURE IF WE NEED THIS NEXT LINE FOR OUR CODE...CHECK ON THIS LINE
+// const { requireUser, calculateRentalPrice, checkRentalExists } = require('./utils');
 
-// GET /api/rentals - get all rentals
+// GET /api/reviews - get all reviews
 router.get('/', async (req, res, next) => {
     try {
-        const rentals = await getAllRentals();
-        res.send(rentals);
+        const reviews = await getAllReviews();
+        res.send(reviews);
     } catch (error) {
         throw error;
     }
 });
 
-// GET /api/rentals/:rentalId - get rental by id
-router.get('/:rentalId', async (req, res, next) => {
+// GET /api/reviews/:reviewId - get review by id
+router.get('/:reviewId', async (req, res, next) => {
     try {
-        const rental = await getRentalById(req.params.rentalId);
-        res.send(rental);
+        const review = await getReviewById(req.params.reviewId);
+        res.send(review);
     } catch (error) {
         throw error;
     }
 });
 
-// POST /api/rentals - create new rental
+// POST /api/reviews - create new review
 router.post('/', requireUser, async (req, res, next) => {
     try {
         // error handling
-        if (!req.body.bike_id || !req.body.rental_date_from || !req.body.rental_date_to) {
-            return res.status(422).send({ errors: [{ title: 'Data missing', detail: 'Provide bike_id, rental_date_from and rental_date_to' }] });
+        //CHECK THIS NEXT LINE...NOT SURE IF WE NEED IT...
+        // if (!req.body.review_id || !req.body.rental_date_from || !req.body.rental_date_to) {
+        //     return res.status(422).send({ errors: [{ title: 'Data missing', detail: 'Provide bike_id, rental_date_from and rental_date_to' }] });
+        // }
+
+        // check if movie exists
+        const movieExists = await getMovieById(req.body.movie_id);
+        if (!movieExists) {
+            return res.status(422).send({ errors: [{ title: 'Movie not found', detail: 'Movie does not exist' }] });
         }
 
-        // check if bike exists
-        const bikeExists = await getBikeById(req.body.bike_id);
-        if (!bikeExists) {
-            return res.status(422).send({ errors: [{ title: 'Bike not found', detail: 'Bike does not exist' }] });
+        // check if review exists
+        //CHECK THIS FUNCTION--NOT SURE IF WE NEED THIS....COMPARED TO SALS DEMO CODE
+        const reviewExists = await checkReviewExists(req.body.movie_id);
+        if (reviewExists) {
+            return res.status(422).send({ errors: [{ title: 'Review exists', detail: 'Review already exists for this movie' }] });
         }
 
-        // check if rental exists
-        const rentalExists = await checkRentalExists(req.body.bike_id, req.body.rental_date_from);
-        if (rentalExists) {
-            return res.status(422).send({ errors: [{ title: 'Rental exists', detail: 'Rental already exists for this bike and dates' }] });
-        }
-
+        //CHECK THIS FUNCTION---I DONT THINK WE NEED THIS...
         // check if rental is in the future
-        const rentalDateFrom = new Date(req.body.rental_date_from);
-        const rentalDateTo = new Date(req.body.rental_date_to);
-        const today = new Date();
+        // const rentalDateFrom = new Date(req.body.rental_date_from);
+        // const rentalDateTo = new Date(req.body.rental_date_to);
+        // const today = new Date();
 
-        if (rentalDateFrom < today) {
-            return res.status(422).send({ errors: [{ title: 'Rental date from is in the past', detail: 'Rental date from is in the past' }] });
-        }
+        // if (rentalDateFrom < today) {
+        //     return res.status(422).send({ errors: [{ title: 'Rental date from is in the past', detail: 'Rental date from is in the past' }] });
+        // }
 
-        if (rentalDateTo < today) {
-            return res.status(422).send({ errors: [{ title: 'Rental date to is in the past', detail: 'Rental date to is in the past' }] });
-        }
+        // if (rentalDateTo < today) {
+        //     return res.status(422).send({ errors: [{ title: 'Rental date to is in the past', detail: 'Rental date to is in the past' }] });
+        // }
 
         // get user id from token
         const { id: user_id } = req.user;
 
+        //CHECK THIS FUNCTION--I DONT THINK WE NEED THIS...
         // calculate total price of rental by taking the bike id, rental dates, and price per day
-        const { bike_id, rental_date_from, rental_date_to } = req.body;
+        // const { bike_id, rental_date_from, rental_date_to } = req.body;
 
-        // calculate total price of rental
-        const total_price = await calculateRentalPrice(bike_id, rental_date_from, rental_date_to);
+        // // calculate total price of rental
+        // const total_price = await calculateRentalPrice(bike_id, rental_date_from, rental_date_to);
 
-        // create rental
-        const rental = await createRental({ bike_id, user_id, rental_date_from, rental_date_to, total_price });
+        // create review
+        const review = await createReview({ movie_id, user_id });
 
-        res.send(rental);
+        res.send(review);
     } catch (error) {
         throw error;
     }
 });
 
 
-// PATCH /api/rentals/:rentalId - update rental by id
-router.patch('/:rentalId', requireUser, async (req, res, next) => {
+// PATCH /api/reviews/:reviewId - update review by id
+router.patch('/:reviewId', requireUser, async (req, res, next) => {
     try {
-        const rental = await updateRentalById(req.params.rentalId, req.body);
-        res.send(rental);
+        const review = await updateReviewById(req.params.reviewId, req.body);
+        res.send(review);
     } catch (error) {
         throw error;
     }
 });
 
-// DELETE /api/rentals/:rentalId - delete rental by id
-router.delete('/:rentalId', requireUser, async (req, res, next) => {
+// DELETE /api/reviews/:reviewId - delete review by id
+router.delete('/:reviewId', requireUser, async (req, res, next) => {
     try {
-        const rental = await deleteRentalById(req.params.rentalId);
-        res.send(rental);
+        const review = await deleteReviewById(req.params.reviewId);
+        res.send(review);
     } catch (error) {
         throw error;
     }
 });
 
-// DELETE /api/rentals - delete all rentals
+// DELETE /api/reviews - delete all reviews
 router.delete('/', requireUser, async (req, res, next) => {
     try {
-        const rentals = await deleteAllRentals();
-        res.send(rentals);
+        const reviews = await deleteAllReviews();
+        res.send(reviews);
     } catch (error) {
         throw error;
     }

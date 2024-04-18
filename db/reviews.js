@@ -1,5 +1,5 @@
 const client = require("./client");
-// const util = require("util");
+const util = require("util");
 
 // database functions
 // get all reviews
@@ -134,7 +134,7 @@ async function deleteReviewById(reviewId) {
 }
 
 // delete all reviews
-async function deleteAllreviews() {
+async function deleteAllReviews() {
   try {
     const { rows } = await client.query(`
         DELETE FROM reviews;
@@ -153,5 +153,5 @@ module.exports = {
   createReviewData,
   updateReviewById,
   deleteReviewById,
-  deleteAllreviews
+  deleteAllReviews
 };
