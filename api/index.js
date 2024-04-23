@@ -1,4 +1,4 @@
-////THIS IS DEMO CODE! NEED TO REPLACE WITH OUR CODE!!
+////I replaced this code!! Check it out!!
 const express = require('express');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
@@ -73,11 +73,11 @@ const usersRouter = require('./users');
 router.use('/users', usersRouter);
 
 // ROUTER: /api/bikes
-const bikesRouter = require('./bikes');
-router.use('/bikes', bikesRouter);
+const moviesRouter = require('./movies');
+router.use('/movies', moviesRouter);
 
 // ROUTER: /api/rentals
-const rentalsRouter = require('./rentals');
-router.use('/rentals', rentalsRouter);
+const reviewsRouter = require('./reviews');
+router.use('/reviews', reviewsRouter);
 
 module.exports = router;

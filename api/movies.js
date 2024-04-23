@@ -1,54 +1,54 @@
-////THIS IS DEMO CODE! NEED TO REPLACE WITH OUR CODE!!
+////I replaced this code!! Check it out!!
 const express = require('express');
 const router = express.Router();
-const { getAllBikes, getBikeById, updateBikeById, deleteBikeById, deleteAllBikes } = require('../db');
+const { getAllMovies, getMovieById, updateMovieById, deleteMovieById, deleteAllMovies } = require('../db');
 const { requireUser } = require('./utils');
 
-// GET /api/bikes
+// GET /api/movies
 router.get('/', async (req, res, next) => {
     try {
-        const bikes = await getAllBikes();
-        res.send(bikes);
+        const movies = await getAllMovies();
+        res.send(movies);
     } catch (error) {
         next(error);
     }
 });
 
-// GET /api/bikes/:bikeId
-router.get('/:bikeId', async (req, res, next) => {
+// GET /api/movies/:movieId
+router.get('/:movieId', async (req, res, next) => {
     try {
-        const bike = await getBikeById(req.params.bikeId);
-        res.send(bike);
+        const movie = await getMovieById(req.params.movieId);
+        res.send(movie);
     } catch (error) {
         next(error);
     }
 });
 
-// PATCH /api/bikes/:bikeId
-router.patch('/:bikeId', requireUser, async (req, res, next) => {
+// PATCH /api/movies/:movieId
+router.patch('/:movieId', requireUser, async (req, res, next) => {
     try {
-        const bike = await updateBikeById(req.params.bikeId, req.body);
-        res.send(bike);
+        const movie = await updateMovieById(req.params.movieId, req.body);
+        res.send(movie);
     } catch (error) {
         next(error);
     }
 });
 
-// DELETE /api/bikes/:bikeId
-router.delete('/:bikeId', requireUser, async (req, res, next) => {
+// DELETE /api/movies/:movieId
+router.delete('/:movieId', requireUser, async (req, res, next) => {
     try {
-        const bike = await deleteBikeById(req.params.bikeId);
-        res.send(bike);
+        const movie = await deleteMovieById(req.params.movieId);
+        res.send(movie);
     } catch (error) {
         next(error);
     }
 });
 
-// DELETE /api/bikes
+// DELETE /api/movies
 router.delete('/', requireUser, async (req, res, next) => {
     try {
-        const bikes = await deleteAllBikes();
-        res.send(bikes);
+        const movies = await deleteAllMovies();
+        res.send(movies);
     } catch (error) {
         next(error);
     }
