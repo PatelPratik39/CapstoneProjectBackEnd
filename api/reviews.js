@@ -5,7 +5,7 @@ const { getAllReviews,
     getReviewById,
     createReview,
     updateReviewById,
-    deleteReviewById, deleteAllReviews, getMovieById } = require('../db');
+    deleteReviewById, deleteAllReviews, getMovieById } = require('../db/reviews');
     //NOT SURE IF WE NEED THIS NEXT LINE FOR OUR CODE...CHECK ON THIS LINE
 // const { requireUser, calculateRentalPrice, checkRentalExists } = require('./utils');
 

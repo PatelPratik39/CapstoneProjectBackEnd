@@ -2,7 +2,7 @@
 const express = require('express');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
-const { getUserById } = require('../db');
+const { getUserById } = require('../db/users');
 const client = require('../db/client');
 const { JWT_SECRET = 'neverTell' } = process.env;
 
@@ -68,16 +68,16 @@ router.use((req, res, next) => {
 	next();
 });
 
-// ROUTER: /api/users
-const usersRouter = require('./users');
-router.use('/users', usersRouter);
+// // ROUTER: /api/users
+// const usersRouter = require('./users');
+// router.use('/users', usersRouter);
 
-// ROUTER: /api/bikes
+// ROUTER: /api/movies
 const moviesRouter = require('./movies');
 router.use('/movies', moviesRouter);
 
-// ROUTER: /api/rentals
-const reviewsRouter = require('./reviews');
-router.use('/reviews', reviewsRouter);
+// // ROUTER: /api/reviews
+// const reviewsRouter = require('./reviews');
+// router.use('/reviews', reviewsRouter);
 
 module.exports = router;
