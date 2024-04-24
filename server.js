@@ -8,7 +8,7 @@ client.connect();
 
 app.use(cors());
 app.use(express.json());
-app.get('/', function(req, res){res.send({"jessica" : "jessica"})});
+// app.get('/', function(req, res){res.send({"jessica" : "jessica"})});
 app.use('/api', require('./api'))
 
 

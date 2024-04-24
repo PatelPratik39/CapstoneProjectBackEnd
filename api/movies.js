@@ -1,13 +1,23 @@
 ////I replaced this code!! Check it out!!
 const express = require('express');
 const router = express.Router();
-const { getAllMovies, getMovieById, updateMovieById, deleteMovieById, deleteAllMovies } = require('../db/movies');
+const { getAllMovies, createNewMovie, getMovieById, updateMovieById, deleteMovieById, deleteAllMovies } = require('../db/movies');
 // const { requireUser } = require('./utils');
 
 // GET /api/movies
 router.get('/', async (req, res, next) => {
     try {
         const movies = await getAllMovies();
+        res.send(movies);
+    } catch (error) {
+        next(error);
+    }
+});
+
+// POST /api/movies
+router.post('/', async (req, res, next) => {
+    try {
+        const movies = await createNewMovie();
         res.send(movies);
     } catch (error) {
         next(error);

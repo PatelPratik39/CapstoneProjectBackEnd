@@ -34,7 +34,11 @@ async function getMovieById(movieId) {
   }
 }
 
-// create new movie requires color, description, size, price
+// create new movie requires title, title,
+  // category,
+  // release_date,
+  // poster_url,
+  // plot
 async function createMovie({
   title,
   category,
