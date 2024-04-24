@@ -34,25 +34,6 @@ async function getMovieById(movieId) {
   }
 }
 
-// // get movie price by id
-// async function getmoviePriceById(movieId) {
-//   try {
-//     const {
-//       rows: [movie]
-//     } = await client.query(
-//       `
-//         SELECT price
-//         FROM movies
-//         WHERE id = $1;
-//         `,
-//       [movieId]
-//     );
-//     return movie.price;
-//   } catch (error) {
-//     throw error;
-//   }
-// }
-
 // create new movie requires color, description, size, price
 async function createMovie({
   title,
@@ -88,7 +69,6 @@ async function updateMovieById(movieId, fields = {}) {
   const setString = Object.keys(fields)
     .map((key, index) => `"${key}"=$${index + 1}`)
     .join(", ");
-
   // return early if this is called without fields
   if (setString.length === 0) {
     return;
@@ -106,7 +86,7 @@ async function updateMovieById(movieId, fields = {}) {
         `,
       Object.values(fields)
     );
-
+    
     return movie;
   } catch (error) {
     throw error;

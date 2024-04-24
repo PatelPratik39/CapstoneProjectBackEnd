@@ -25,7 +25,7 @@ router.get('/:movieId', async (req, res, next) => {
 });
 
 // PATCH /api/movies/:movieId
-router.patch('/:movieId', requireUser, async (req, res, next) => {
+router.patch('/:movieId', async (req, res, next) => {
     try {
         const movie = await updateMovieById(req.params.movieId, req.body);
         res.send(movie);
