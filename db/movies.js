@@ -113,6 +113,7 @@ async function deleteMovieById(movieId) {
       WHERE id = $1
       RETURNING *;
       `,
+
       [movieId]
     );
     return movie;

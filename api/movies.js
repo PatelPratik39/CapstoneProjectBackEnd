@@ -35,7 +35,9 @@ router.patch('/:movieId', async (req, res, next) => {
 });
 
 // DELETE /api/movies/:movieId
-router.delete('/:movieId', async (req, res, next) => {
+
+router.delete('/:movieId',  async (req, res, next) => {
+
     try {
         const movie = await deleteMovieById(req.params.movieId);
         res.send(movie);
