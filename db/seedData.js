@@ -44,7 +44,6 @@ async function createTables() {
             title TEXT,
             release_date DATE,
             category TEXT,
-            description TEXT,
             poster_url TEXT,
             plot TEXT
           );

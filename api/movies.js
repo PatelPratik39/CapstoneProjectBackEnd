@@ -25,7 +25,7 @@ router.get('/:movieId', async (req, res, next) => {
 });
 
 // PATCH /api/movies/:movieId
-router.patch('/:movieId', requireUser, async (req, res, next) => {
+router.patch('/:movieId', async (req, res, next) => {
     try {
         const movie = await updateMovieById(req.params.movieId, req.body);
         res.send(movie);
@@ -35,14 +35,14 @@ router.patch('/:movieId', requireUser, async (req, res, next) => {
 });
 
 // DELETE /api/movies/:movieId
-// router.delete('/:movieId', requireUser, async (req, res, next) => {
-//     try {
-//         const movie = await deleteMovieById(req.params.movieId);
-//         res.send(movie);
-//     } catch (error) {
-//         next(error);
-//     }
-// });
+router.delete('/:movieId',  async (req, res, next) => {
+    try {
+        const movie = await deleteMovieById(req.params.movieId);
+        res.send(movie);
+    } catch (error) {
+        next(error);
+    }
+});
 
 // // DELETE /api/movies
 // router.delete('/', requireUser, async (req, res, next) => {
