@@ -1,11 +1,15 @@
 const express = require("express");
 const cors = require("cors");
-
+const client = require('./db/client');
 const app = express();
-const PORT = process.env.PORT || 5432;
+const PORT = process.env.PORT || 3000;
+
+client.connect();
 
 app.use(cors());
 app.use(express.json());
+app.get('/', function(req, res){res.send({"jessica" : "jessica"})});
+app.use('/api', require('./api'))
 
 
 app.listen(PORT, () => {
@@ -18,24 +22,24 @@ app.listen(PORT, () => {
 // require('dotenv').config();
 // const express = require('express');
 // const server = express();
-// // const morgan = require('morgan');
-// // 
+// const morgan = require('morgan');
 // const cors = require('cors');
 // const { PORT = 5432 } = process.env;
 
-// const client = require('./db/client');
-// client.connect();
+
 
 // server.use(cors());
 
-// // logging middleware
-// // server.use(morgan('dev'));
-// // parsing middleware
+// logging middleware
+// server.use(morgan('dev'));
+// parsing middleware
 // server.use(express.json());
 // server.use(express.urlencoded({ extended: true }));
 
-// // Router: /api
+// Router: /api
 // server.use('/api', require('./api'));
+
+
 
 // // 404 handler
 // server.get('*', (req, res) => {
@@ -45,22 +49,13 @@ app.listen(PORT, () => {
 // 	});
 // });
 
-// // error handling middleware
-// server.use((error, req, res, next) => {
-// 	console.error('SERVER ERROR: ', error);
-// 	if (res.statusCode < 400) res.status(500);
-// 	res.send({
-// 		error: error.message,
-// 		name: error.name,
-// 		message: error.message,
-// 		table: error.table
-// 	});
-// });
+// error handling middleware
+
 
 // server.listen(PORT, () => {
 // 	console.log(
 // 		chalk.blue('Server is listening on PORT:'),
 // 		chalk.yellow(PORT),
-// 		chalk.red('Let the bikes roll!')
+// 		chalk.red('Let the movies roll!')
 // 	);
 // });
