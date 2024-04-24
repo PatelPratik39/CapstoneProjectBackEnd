@@ -120,9 +120,8 @@ async function deleteMovieById(movieId) {
       rows: [movie]
     } = await client.query(
       `
-        DELETE FROM movies
-        WHERE id=$1
-        RETURNING *;
+        DELETE FROM reviews
+        WHERE movie_id =$1
         `,
       [movieId]
     );
