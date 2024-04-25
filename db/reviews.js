@@ -114,36 +114,36 @@ async function updateReviewById(reviewId, fields = {}) {
   }
 }
 
-// // delete review by id
-// async function deleteReviewById(reviewId) {
-//   try {
-//     const {
-//       rows: [review]
-//     } = await client.query(
-//       `
-//         DELETE FROM reviews
-//         WHERE id=$1
-//         RETURNING *;
-//         `,
-//       [reviewId]
-//     );
-//     return review;
-//   } catch (error) {
-//     throw error;
-//   }
-// }
+// delete review by id
+async function deleteReviewById(reviewId) {
+  try {
+    const {
+      rows: [review]
+    } = await client.query(
+      `
+        DELETE FROM reviews
+        WHERE id=$1
+        RETURNING *;
+        `,
+      [reviewId]
+    );
+    return review;
+  } catch (error) {
+    throw error;
+  }
+}
 
 // // delete all reviews
-// async function deleteAllReviews() {
-//   try {
-//     const { rows } = await client.query(`
-//         DELETE FROM reviews;
-//         `);
-//     return rows;
-//   } catch (error) {
-//     throw error;
-//   }
-// }
+async function deleteAllReviews() {
+  try {
+    const { rows } = await client.query(`
+        DELETE FROM reviews;
+        `);
+    return rows;
+  } catch (error) {
+    throw error;
+  }
+}
 
 // export functions
 module.exports = {
@@ -152,6 +152,6 @@ module.exports = {
   // createReview,
   // createReviewData,
   updateReviewById,
-  // deleteReviewById,
-  // deleteAllReviews
+  deleteReviewById,
+  deleteAllReviews
 };
