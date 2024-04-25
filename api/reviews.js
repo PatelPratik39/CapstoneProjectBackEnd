@@ -1,11 +1,11 @@
 // I replaced this code!! Check it out!!
 const express = require('express');
 const router = express.Router();
-const { getAllReviews, getReviewById, updateReviewById } = require('../db/reviews');
+const { getAllReviews, getReviewById, updateReviewById, deleteReviewById, deleteAllReviews } = require('../db/reviews');
 //     createReview,
 //     updateReviewById,
-//     deleteReviewById, 
-        // deleteAllReviews,
+//     
+        
         // getMovieById 
         // } = require('../db/reviews');
     // NOT SURE IF WE NEED THIS NEXT LINE FOR OUR CODE...CHECK ON THIS LINE
@@ -77,24 +77,24 @@ router.patch('/:reviewId', async (req, res, next) => {
 });
 
 // DELETE /api/reviews/:reviewId - delete review by id
-// router.delete('/:reviewId', requireUser, async (req, res, next) => {
-//     try {
-//         const review = await deleteReviewById(req.params.reviewId);
-//         res.send(review);
-//     } catch (error) {
-//         throw error;
-//     }
-// });
+router.delete('/:reviewId',  async (req, res, next) => {
+    try {
+        const review = await deleteReviewById(req.params.reviewId);
+        res.send(review);
+    } catch (error) {
+        throw error;
+    }
+});
 
 // DELETE /api/reviews - delete all reviews
-// router.delete('/', requireUser, async (req, res, next) => {
-//     try {
-//         const reviews = await deleteAllReviews();
-//         res.send(reviews);
-//     } catch (error) {
-//         throw error;
-//     }
-// });
+router.delete('/',  async (req, res, next) => {
+    try {
+        const reviews = await deleteAllReviews();
+        res.send(reviews);
+    } catch (error) {
+        throw error;
+    }
+});
 
 
 
