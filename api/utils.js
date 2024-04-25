@@ -48,49 +48,9 @@ const requiredNotSent = ({ requiredParams, atLeastOne = false }) => {
     }
   }
 }
-// //CHECK THIS FUNCTION--I DONT THINK WE NEED THIS....
-// // calculate total price of rental by taking the bike id, rental dates, and price per day
-// // async function calculateRentalPrice(bike_id, rental_date_from, rental_date_to) {
-// //   try {
 
-//     // get bike price per day
-// //     const { rows: [bike] } = await client.query(`
-// //       SELECT price
-// //       FROM bikes
-// //       WHERE id=$1
-// //     `, [bike_id]);
-
-// //     const price_per_day = bike.price;
-// //     const from = new Date(rental_date_from);
-// //     const to = new Date(rental_date_to);
-// //     const days = Math.ceil((to - from) / (1000 * 60 * 60 * 24));
-
-// //     return price_per_day * days;
-// //   } catch (error) {
-// //     throw error;
-// //   }
-// // }
-
-// //CHECK THIS CODE I DONT THINK WE NEED THIS...
-// // check if a bike is already rented on a given date
-// // async function checkRentalExists(bike_id, rental_date_from) {
-// //   try {
-// //     const { rows: [rented] } = await client.query(`
-// //       SELECT *
-// //       FROM rentals
-// //       WHERE bike_id=$1
-// //       AND rental_date_from=$2
-// //     `, [bike_id, rental_date_from]);
-
-// //     return rented;
-// //   } catch (error) {
-// //     throw error;
-// //   }
-// // }
 
 module.exports = {
   requireUser,
   requiredNotSent,
-  // calculateRentalPrice,
-  // checkRentalExists
 }
