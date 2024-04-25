@@ -34,55 +34,55 @@ async function getReviewById(reviewId) {
   }
 }
 
-// create new review
-async function createReviewData({
-  movie_id,
-  user_id,
-  rating,
-  comment,
-  review_date
-}) {
-  try {
-    const {
-      rows: [review]
-    } = await client.query(
-      `
-        INSERT INTO reviews(movie_id, user_id, rating, comment, review_date)
-        VALUES ($1, $2, $3, $4, $5)
-        RETURNING *;
-        `,
-      [movie_id, user_id, rating, comment, review_date]
-    );
-    return review;
-  } catch (error) {
-    throw error;
-  }
-}
+// // create new review
+// async function createReviewData({
+//   movie_id,
+//   user_id,
+//   rating,
+//   comment,
+//   review_date
+// }) {
+//   try {
+//     const {
+//       rows: [review]
+//     } = await client.query(
+//       `
+//         INSERT INTO reviews(movie_id, user_id, rating, comment, review_date)
+//         VALUES ($1, $2, $3, $4, $5)
+//         RETURNING *;
+//         `,
+//       [movie_id, user_id, rating, comment, review_date]
+//     );
+//     return review;
+//   } catch (error) {
+//     throw error;
+//   }
+// }
 
-// add new review
-async function createReview({
-  movie_id,
-  user_id,
-  rating,
-  comment,
-  review_date
-}) {
-  try {
-    const {
-      rows: [review]
-    } = await client.query(
-      `
-        INSERT INTO reviews(movie_id, user_id, rating, comment, review_date)
-        VALUES ($1, $2, $3, $4, $5)
-        RETURNING *;
-        `,
-      [movie_id, user_id, rating, comment, review_date]
-    );
-    return review;
-  } catch (error) {
-    throw error;
-  }
-}
+// // add new review
+// async function createReview({
+//   movie_id,
+//   user_id,
+//   rating,
+//   comment,
+//   review_date
+// }) {
+//   try {
+//     const {
+//       rows: [review]
+//     } = await client.query(
+//       `
+//         INSERT INTO reviews(movie_id, user_id, rating, comment, review_date)
+//         VALUES ($1, $2, $3, $4, $5)
+//         RETURNING *;
+//         `,
+//       [movie_id, user_id, rating, comment, review_date]
+//     );
+//     return review;
+//   } catch (error) {
+//     throw error;
+//   }
+// }
 
 // update review by id
 async function updateReviewById(reviewId, fields = {}) {
@@ -133,7 +133,7 @@ async function deleteReviewById(reviewId) {
   }
 }
 
-// delete all reviews
+// // delete all reviews
 async function deleteAllReviews() {
   try {
     const { rows } = await client.query(`
@@ -149,8 +149,8 @@ async function deleteAllReviews() {
 module.exports = {
   getAllReviews,
   getReviewById,
-  createReview,
-  createReviewData,
+  // createReview,
+  // createReviewData,
   updateReviewById,
   deleteReviewById,
   deleteAllReviews
