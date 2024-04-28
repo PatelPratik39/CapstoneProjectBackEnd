@@ -1,5 +1,5 @@
 const client = require("./client");
-const util = require("util");
+const util = require("./util");
 
 // database functions
 // get all reviews
@@ -35,54 +35,54 @@ async function getReviewById(reviewId) {
 }
 
 // // create new review
-// async function createReviewData({
-//   movie_id,
-//   user_id,
-//   rating,
-//   comment,
-//   review_date
-// }) {
-//   try {
-//     const {
-//       rows: [review]
-//     } = await client.query(
-//       `
-//         INSERT INTO reviews(movie_id, user_id, rating, comment, review_date)
-//         VALUES ($1, $2, $3, $4, $5)
-//         RETURNING *;
-//         `,
-//       [movie_id, user_id, rating, comment, review_date]
-//     );
-//     return review;
-//   } catch (error) {
-//     throw error;
-//   }
-// }
+async function createReviewData({
+  movie_id,
+  user_id,
+  rating,
+  comment,
+  review_date
+}) {
+  try {
+    const {
+      rows: [review]
+    } = await client.query(
+      `
+        INSERT INTO reviews(movie_id, user_id, rating, comment, review_date)
+        VALUES ($1, $2, $3, $4, $5)
+        RETURNING *;
+        `,
+      [movie_id, user_id, rating, comment, review_date]
+    );
+    return review;
+  } catch (error) {
+    throw error;
+  }
+}
 
 // // add new review
-// async function createReview({
-//   movie_id,
-//   user_id,
-//   rating,
-//   comment,
-//   review_date
-// }) {
-//   try {
-//     const {
-//       rows: [review]
-//     } = await client.query(
-//       `
-//         INSERT INTO reviews(movie_id, user_id, rating, comment, review_date)
-//         VALUES ($1, $2, $3, $4, $5)
-//         RETURNING *;
-//         `,
-//       [movie_id, user_id, rating, comment, review_date]
-//     );
-//     return review;
-//   } catch (error) {
-//     throw error;
-//   }
-// }
+async function createReview({
+  movie_id,
+  user_id,
+  rating,
+  comment,
+  review_date
+}) {
+  try {
+    const {
+      rows: [review]
+    } = await client.query(
+      `
+        INSERT INTO reviews(movie_id, user_id, rating, comment, review_date)
+        VALUES ($1, $2, $3, $4, $5)
+        RETURNING *;
+        `,
+      [movie_id, user_id, rating, comment, review_date]
+    );
+    return review;
+  } catch (error) {
+    throw error;
+  }
+}
 
 // update review by id
 async function updateReviewById(reviewId, fields = {}) {
@@ -149,8 +149,8 @@ async function deleteAllReviews() {
 module.exports = {
   getAllReviews,
   getReviewById,
-  // createReview,
-  // createReviewData,
+  createReview,
+  createReviewData,
   updateReviewById,
   deleteReviewById,
   deleteAllReviews
