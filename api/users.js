@@ -32,7 +32,7 @@
 // 			{ expiresIn: '1w' }
 // 		);
 
-// 		response.send({
+// 		response.json({
 // 			newUser,
 // 			message: "you're signed up!",
 // 			token
@@ -62,7 +62,7 @@
 // 			{ expiresIn: '1w' }
 // 		);
 
-// 		response.send({
+// 		response.json({
 // 			message: 'Login success~',
 // 			user,
 // 			token

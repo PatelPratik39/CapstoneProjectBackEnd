@@ -34,24 +34,6 @@ async function getMovieById(movieId) {
   }
 }
 
-// // get movie price by id
-// async function getmoviePriceById(movieId) {
-//   try {
-//     const {
-//       rows: [movie]
-//     } = await client.query(
-//       `
-//         SELECT price
-//         FROM movies
-//         WHERE id = $1;
-//         `,
-//       [movieId]
-//     );
-//     return movie.price;
-//   } catch (error) {
-//     throw error;
-//   }
-// }
 
 // create new movie requires color, description, size, price
 async function createMovie({

@@ -1,5 +1,5 @@
 ////THIS IS DEMO CODE! NEED TO REPLACE WITH OUR CODE!!
-// const express = require('express');
+const express = require('express');
 // const router = express.Router();
 // const jwt = require('jsonwebtoken');
 // const {
@@ -37,7 +37,7 @@
 // 				JWT_SECRET,
 // 				{ expiresIn: '1w' }
 // 			);
-// 			res.send({ user, message: "you're logged in!", token });
+// 			res.json({ user, message: "you're logged in!", token });
 // 		}
 // 	} catch (error) {
 // 		next(error);
@@ -79,7 +79,7 @@
 // 					JWT_SECRET,
 // 					{ expiresIn: '1w' }
 // 				);
-// 				res.send({ user, message: "you're signed up!", token });
+// 				res.json({ user, message: "You're signed up!", token });
 // 			}
 // 		}
 // 	} catch (error) {
