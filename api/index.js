@@ -69,8 +69,8 @@ router.use((req, res, next) => {
 });
 
 // // ROUTER: /api/users
-// const usersRouter = require('./users_original');
-// router.use('/users', usersRouter);
+const usersRouter = require('./users');
+router.use('/users', usersRouter);
 
 // ROUTER: /api/movies
 const moviesRouter = require('./movies');

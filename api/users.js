@@ -1,19 +1,22 @@
 ////THIS IS DEMO CODE! NEED TO REPLACE WITH OUR CODE!!
-// const express = require('express');
-// const router = express.Router();
-// const jwt = require('jsonwebtoken');
-// const {
-// 	createUser,
-// 	getUserByUsername,
-// 	getUser,
-// 	getUserById,
-// 	getPlaylistById
-// } = require('../db');
-// const { requireUser } = require('./utils');
-// const { JWT_SECRET } = process.env;
+const express = require("express");
+const router = express.Router();
+const jwt = require("jsonwebtoken");
+const {
+  createUser,
+  getUserByUsername,
+  getUser,
+  getUserById,
+  getPlaylistById
+} = require("../db");
+const { requireUser } = require("./utils");
+const { JWT_SECRET } = process.env;
+// const dotenv= require("dotenv");
 
-// // POST /api/users/register
-// // IMPLEMENT THE REGISTER ROUTE
+
+// console.log(JWT_SECRET);
+// POST /api/users/register
+// IMPLEMENT THE REGISTER ROUTE
 // router.post('/register', async function (request, response, next) {
 // 	try {
 // 		const { username, password, name } = request.body;
@@ -45,41 +48,45 @@
 
 // // POST /api/users/login
 // // IMPLEMENT THE LOGIN ROUTE
-// router.post('/login', async function (request, response, next) {
-// 	try {
-// 		const { username, password } = request.body;
+router.post("/login", async function (request, response, next) {
+  try {
+   
+    const { username, password } = request.body;
+   
 
-// 		const user = await getUser(username, password);
+    const user = await getUser(username, password);
+   
 
-// 		delete user.password;
+    delete user.password;
 
-// 		const token = jwt.sign(
-// 			{
-// 				id: user.id,
-// 				username: user.username
-// 			},
-// 			JWT_SECRET,
-// 			{ expiresIn: '1w' }
-// 		);
+    const token = jwt.sign(
+      {
+        id: user.id,
+        username: user.username
+      },
+      JWT_SECRET,
+      { expiresIn: "1w" }
+    );
+	
 
-// 		response.json({
-// 			message: 'Login success~',
-// 			user,
-// 			token
-// 		});
-// 	} catch (error) {
-// 		console.log('error in login endpoint', error);
-// 		next(error);
-// 	}
-// });
+    response.json({
+      message: "Login success~",
+      user,
+      token
+    });
+  } catch (error) {
+    console.log("error in login endpoint", error);
+    next(error);
+  }
+});
 
 // // GET /api/users/me
-// router.get('/me', requireUser, async (req, res, next) => {
-// 	try {
-// 		res.send(req.user);
-// 	} catch (error) {
-// 		next(error);
-// 	}
+// router.get("/me", requireUser, async (req, res, next) => {
+//   try {
+//     res.send(req.user);
+//   } catch (error) {
+//     next(error);
+//   }
 // });
 
-// module.exports = router;
+module.exports = router;
