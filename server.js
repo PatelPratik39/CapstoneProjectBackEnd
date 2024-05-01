@@ -6,25 +6,14 @@ const app = express();
 const server = express();
 const morgan = require("morgan");
 const PORT = process.env.PORT || 3000;
-// const hashedPassword = await bcrypt.hash(password, salt);
+
 
 client.connect();
 dotenv.config();
 
 app.use(cors());
 app.use(express.json());
-// app.get('/', function(req, res){res.send({"jessica" : "jessica"})});
 app.use("/api", require("./api"));
-
-
-//CHECK SALS DEMO CODE FOR THIS CODE--- DO WE NEED THIS CODE FOR OUR STUFF TO WORK?
-
-// require('dotenv').config();
-// const express = require('express');
-const server = express();
-const morgan = require("morgan");
-// const cors = require('cors');
-// const { PORT = 5432 } = process.env;
 
 
 server.use(cors());
