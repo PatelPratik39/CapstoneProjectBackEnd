@@ -1,12 +1,13 @@
 const express = require("express");
 const cors = require("cors");
 const client = require("./db/client");
-// const dotenv = require("dotenv");
+const dotenv = require("dotenv");
 const app = express();
 const PORT = process.env.PORT || 3000;
+// const hashedPassword = await bcrypt.hash(password, salt);
 
 client.connect();
-// dotenv.config();
+dotenv.config();
 
 app.use(cors());
 app.use(express.json());
@@ -15,7 +16,7 @@ app.use("/api", require("./api"));
 
 //CHECK SALS DEMO CODE FOR THIS CODE--- DO WE NEED THIS CODE FOR OUR STUFF TO WORK?
 
-require('dotenv').config();
+// require('dotenv').config();
 // const express = require('express');
 const server = express();
 const morgan = require("morgan");
