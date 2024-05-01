@@ -25,9 +25,9 @@ async function createUser({ email, username, password }) {
   }
 }
 async function getUser(username, password) {
-  // if (!username || !password) {
-  //   return;
-  // }
+  if (!username || !password) {
+    return;
+  }
   console.log(username , password);
 
   try {
