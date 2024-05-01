@@ -13,9 +13,9 @@ const { JWT_SECRET } = process.env;
 // const dotenv= require("dotenv");
 
 
-// console.log(JWT_SECRET);
 // POST /api/users/register
 // IMPLEMENT THE REGISTER ROUTE
+
 router.post("/register", async function (request, response, next) {
   try {
     const { username, password, name, email } = request.body;
@@ -43,7 +43,8 @@ router.post("/register", async function (request, response, next) {
     console.log("error in register endpoint", error);
     next(error);
   }
-});
+
+
 
 // // POST /api/users/login
 // // IMPLEMENT THE LOGIN ROUTE
@@ -86,6 +87,16 @@ router.get("/me", requireUser, async (req, res, next) => {
   } catch (error) {
     next(error);
   }
+});
+
+// get user by userId
+router.get('/:userId', async (req, res, next) => {
+	try {
+		const user = await getUserById(req.params.userId);
+		res.send(user);
+	} catch (error) {
+		throw error;
+	}
 });
 
 module.exports = router;

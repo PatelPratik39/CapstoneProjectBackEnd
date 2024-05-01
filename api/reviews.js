@@ -3,7 +3,8 @@ const express = require('express');
 const router = express.Router();
 const { getAllReviews, getReviewById, updateReviewById, deleteReviewById, deleteAllReviews, createReview } = require('../db/reviews');
 const { getMovieById } = require('../db/movies');
-//getMovieById
+const { getReviewsByMovieId, getReviewsByUserId } = require('../db/reviews');
+
     
         
     // NOT SURE IF WE NEED THIS NEXT LINE FOR OUR CODE...CHECK ON THIS LINE
@@ -96,6 +97,25 @@ router.delete('/',  async (req, res, next) => {
     }
 });
 
+// get reviews by movieId
+router.get('reviews/:movieId', async (req, res, next) => {
+    try {
+    const review = await getReviewsByMovieId(req.params.movieId);
+    res.send(review);
+    } catch (error) {
+        throw error;
+    }
+});
 
+// get reviews by userId
+router.get('/user/:userId', async (req, res, next) => {
+    try {
+        const review = await getReviewsByUserId(req.params.userId);
+        res.send(review);
+    } catch (error) {
+        throw error;
+    }
+});
+    
 
 module.exports = router;
