@@ -6,6 +6,7 @@ const SALT_COUNT = 10;
 
 // // user functions
 async function createUser({ email, username, password }) {
+  
   const hashedPassword = await bcrypt.hash(password, SALT_COUNT);
   try {
     const {
@@ -96,6 +97,6 @@ async function getUserByUsername(userName) {
 module.exports = {
   createUser,
   getUser,
-  // getUserById,
+  getUserById,
   getUserByUsername
 };
