@@ -1,13 +1,13 @@
-////THIS IS DEMO CODE! NEED TO REPLACE WITH OUR CODE!!
-const express = require('express');
+// ////THIS IS DEMO CODE! NEED TO REPLACE WITH OUR CODE!!
+// const express = require('express');
 // const router = express.Router();
 // const jwt = require('jsonwebtoken');
 // const {
-// 	createUser,
+// 	// createUser,
 // 	getUserByUsername,
 // 	getUser,
-// 	getUserById,
-// 	getPlaylistById
+// 	// getUserById,
+// 	// getPlaylistById
 // } = require('../db/users');
 // const { requireUser } = require('./utils');
 // const { JWT_SECRET = 'neverTell' } = process.env;
@@ -87,13 +87,13 @@ const express = require('express');
 // 	}
 // });
 
-// // GET /api/users/me
-// router.get('/me', requireUser, async (req, res, next) => {
-// 	try {
-// 		res.send(req.user);
-// 	} catch (error) {
-// 		next(error);
-// 	}
-// });
+// // // GET /api/users/me
+// // router.get('/me', requireUser, async (req, res, next) => {
+// // 	try {
+// // 		res.send(req.user);
+// // 	} catch (error) {
+// // 		next(error);
+// // 	}
+// // });
 
 // module.exports = router;

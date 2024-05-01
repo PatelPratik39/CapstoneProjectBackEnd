@@ -145,6 +145,40 @@ async function deleteAllReviews() {
   }
 }
 
+// get reviews by movie id
+async function getReviewsByMovieId(movieId) {
+  try {
+    const { rows } = await client.query(
+      `
+        SELECT *
+        FROM reviews
+        WHERE movie_id = $1;
+        `,
+      [movieId]
+    );
+    return rows;
+  } catch (error) {
+    throw error;
+  }
+}
+
+//get reviews by userId
+async function getReviewsByUserId(userId) {
+  try {
+    const { rows } = await client.query(
+      `
+        SELECT *
+        FROM reviews
+        WHERE user_id = $1;
+        `,
+      [userId]
+    );
+    return rows;
+  } catch (error) {
+    throw error;
+  }
+}
+
 // export functions
 module.exports = {
   getAllReviews,
@@ -153,5 +187,9 @@ module.exports = {
   createReviewData,
   updateReviewById,
   deleteReviewById,
-  deleteAllReviews
+  deleteAllReviews,
+  getReviewsByMovieId,
+  getReviewsByUserId
+
+
 };
