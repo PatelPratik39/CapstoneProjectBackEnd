@@ -16,7 +16,7 @@ dotenv.config();
 
 
 server.use(cors({
-        origin: "https://capstoneprojectbackend-ywy6.onrender.com"
+        origin: "http://localhost:5173"
     }
 ))
 server.options('*', cors())
