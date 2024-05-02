@@ -79,13 +79,13 @@ router.post("/login", async function (request, response, next) {
 });
 
 // // GET /api/users/me
-router.get("/me", requireUser, async (req, res, next) => {
-  try {
-    res.send(req.user);
-  } catch (error) {
-    next(error);
-  }
-});
+// router.get("/me", requireUser, async (req, res, next) => {
+//   try {
+//     res.send(req.user);
+//   } catch (error) {
+//     next(error);
+//   }
+// });
 
 //get user by userId
 router.get('/:userId', async (req, res, next) => {
