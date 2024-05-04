@@ -98,7 +98,7 @@ router.delete('/',  async (req, res, next) => {
 });
 
 // get reviews by movieId
-router.get('reviews/:movieId', async (req, res, next) => {
+router.get('/reviews/:movieId', async (req, res, next) => {
     try {
     const review = await getReviewsByMovieId(req.params.movieId);
     res.send(review);
