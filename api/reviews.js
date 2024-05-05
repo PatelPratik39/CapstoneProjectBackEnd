@@ -1,15 +1,16 @@
-////I replaced this code!! Check it out!!
+// I replaced this code!! Check it out!!
 const express = require('express');
 const router = express.Router();
-const { getAllReviews,
-    getReviewById,
-    createReview,
-    updateReviewById,
-    deleteReviewById, deleteAllReviews, getMovieById } = require('../db/reviews');
-    //NOT SURE IF WE NEED THIS NEXT LINE FOR OUR CODE...CHECK ON THIS LINE
-// const { requireUser, calculateRentalPrice, checkRentalExists } = require('./utils');
+const { getAllReviews, getReviewById, updateReviewById, deleteReviewById, deleteAllReviews, createReview } = require('../db/reviews');
+const { getMovieById } = require('../db/movies');
+const { getReviewsByMovieId, getReviewsByUserId } = require('../db/reviews');
 
-// GET /api/reviews - get all reviews
+    
+        
+    // NOT SURE IF WE NEED THIS NEXT LINE FOR OUR CODE...CHECK ON THIS LINE
+const { requireUser } = require('./utils');
+
+// GET /api/reviews - get all reviews THIS ENDPOINT WORKS! 4/23
 router.get('/', async (req, res, next) => {
     try {
         const reviews = await getAllReviews();
@@ -19,7 +20,7 @@ router.get('/', async (req, res, next) => {
     }
 });
 
-// GET /api/reviews/:reviewId - get review by id
+// GET /api/reviews/:reviewId - get review by id THIS ENDPOINT WORKS! 4/23
 router.get('/:reviewId', async (req, res, next) => {
     try {
         const review = await getReviewById(req.params.reviewId);
@@ -29,54 +30,35 @@ router.get('/:reviewId', async (req, res, next) => {
     }
 });
 
-// POST /api/reviews - create new review
-router.post('/', requireUser, async (req, res, next) => {
+// POST /api/reviews - create new review/removed requireUser  THIS ENDPOINT WORKS! 4/27
+router.post('/', async (req, res, next) => {
     try {
         // error handling
-        //CHECK THIS NEXT LINE...NOT SURE IF WE NEED IT...
+        // CHECK THIS NEXT LINE...NOT SURE IF WE NEED IT...
         // if (!req.body.review_id || !req.body.rental_date_from || !req.body.rental_date_to) {
         //     return res.status(422).send({ errors: [{ title: 'Data missing', detail: 'Provide bike_id, rental_date_from and rental_date_to' }] });
         // }
 
         // check if movie exists
-        const movieExists = await getMovieById(req.body.movie_id);
-        if (!movieExists) {
-            return res.status(422).send({ errors: [{ title: 'Movie not found', detail: 'Movie does not exist' }] });
-        }
-
-        // check if review exists
-        //CHECK THIS FUNCTION--NOT SURE IF WE NEED THIS....COMPARED TO SALS DEMO CODE
-        const reviewExists = await checkReviewExists(req.body.movie_id);
-        if (reviewExists) {
-            return res.status(422).send({ errors: [{ title: 'Review exists', detail: 'Review already exists for this movie' }] });
-        }
-
-        //CHECK THIS FUNCTION---I DONT THINK WE NEED THIS...
-        // check if rental is in the future
-        // const rentalDateFrom = new Date(req.body.rental_date_from);
-        // const rentalDateTo = new Date(req.body.rental_date_to);
-        // const today = new Date();
-
-        // if (rentalDateFrom < today) {
-        //     return res.status(422).send({ errors: [{ title: 'Rental date from is in the past', detail: 'Rental date from is in the past' }] });
+        // const movieExists = await getMovieById(req.body.movie_id);
+        // if (!movieExists) {
+        //     return res.status(422).send({ errors: [{ title: 'Movie not found', detail: 'Movie does not exist' }] });
         // }
 
-        // if (rentalDateTo < today) {
-        //     return res.status(422).send({ errors: [{ title: 'Rental date to is in the past', detail: 'Rental date to is in the past' }] });
+        // check if review exists
+        // CHECK THIS FUNCTION--NOT SURE IF WE NEED THIS....COMPARED TO SALS DEMO CODE
+        // const reviewExists = await checkReviewExists(req.body.movie_id);
+        // if (reviewExists) {
+        //     return res.status(422).send({ errors: [{ title: 'Review exists', detail: 'Review already exists for this movie' }] });
         // }
 
         // get user id from token
-        const { id: user_id } = req.user;
+        // const { id: user_id } = req.user;
+        const { movie_id , user_id, rating, comment, review_date } = req.body
 
-        //CHECK THIS FUNCTION--I DONT THINK WE NEED THIS...
-        // calculate total price of rental by taking the bike id, rental dates, and price per day
-        // const { bike_id, rental_date_from, rental_date_to } = req.body;
 
-        // // calculate total price of rental
-        // const total_price = await calculateRentalPrice(bike_id, rental_date_from, rental_date_to);
-
-        // create review
-        const review = await createReview({ movie_id, user_id });
+    //    create review
+        const review = await createReview({ movie_id, user_id, rating, comment, review_date });
 
         res.send(review);
     } catch (error) {
@@ -85,8 +67,8 @@ router.post('/', requireUser, async (req, res, next) => {
 });
 
 
-// PATCH /api/reviews/:reviewId - update review by id
-router.patch('/:reviewId', requireUser, async (req, res, next) => {
+// PATCH /api/reviews/:reviewId - update review by id THIS ENDPOINT WORKS! 4/24 had to take out the require user
+router.patch('/:reviewId', async (req, res, next) => {
     try {
         const review = await updateReviewById(req.params.reviewId, req.body);
         res.send(review);
@@ -96,7 +78,7 @@ router.patch('/:reviewId', requireUser, async (req, res, next) => {
 });
 
 // DELETE /api/reviews/:reviewId - delete review by id
-router.delete('/:reviewId', requireUser, async (req, res, next) => {
+router.delete('/:reviewId',  async (req, res, next) => {
     try {
         const review = await deleteReviewById(req.params.reviewId);
         res.send(review);
@@ -106,7 +88,7 @@ router.delete('/:reviewId', requireUser, async (req, res, next) => {
 });
 
 // DELETE /api/reviews - delete all reviews
-router.delete('/', requireUser, async (req, res, next) => {
+router.delete('/',  async (req, res, next) => {
     try {
         const reviews = await deleteAllReviews();
         res.send(reviews);
@@ -115,6 +97,25 @@ router.delete('/', requireUser, async (req, res, next) => {
     }
 });
 
+// get reviews by movieId
+router.get('/reviews/:movieId', async (req, res, next) => {
+    try {
+    const review = await getReviewsByMovieId(req.params.movieId);
+    res.send(review);
+    } catch (error) {
+        throw error;
+    }
+});
 
-// export router
+// get reviews by userId
+router.get('/user/:userId', async (req, res, next) => {
+    try {
+        const review = await getReviewsByUserId(req.params.userId);
+        res.send(review);
+    } catch (error) {
+        throw error;
+    }
+});
+    
+
 module.exports = router;

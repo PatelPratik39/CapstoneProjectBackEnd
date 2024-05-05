@@ -1,5 +1,5 @@
 const client = require("./client");
-const util = require("util");
+const util = require("./util");
 
 // database functions
 // get all reviews
@@ -34,7 +34,7 @@ async function getReviewById(reviewId) {
   }
 }
 
-// create new review
+// // create new review
 async function createReviewData({
   movie_id,
   user_id,
@@ -59,7 +59,7 @@ async function createReviewData({
   }
 }
 
-// add new review
+// // add new review
 async function createReview({
   movie_id,
   user_id,
@@ -133,12 +133,46 @@ async function deleteReviewById(reviewId) {
   }
 }
 
-// delete all reviews
+// // delete all reviews
 async function deleteAllReviews() {
   try {
     const { rows } = await client.query(`
         DELETE FROM reviews;
         `);
+    return rows;
+  } catch (error) {
+    throw error;
+  }
+}
+
+// get reviews by movie id
+async function getReviewsByMovieId(movieId) {
+  try {
+    const { rows } = await client.query(
+      `
+        SELECT *
+        FROM reviews
+        WHERE movie_id = $1;
+        `,
+      [movieId]
+    );
+    return rows;
+  } catch (error) {
+    throw error;
+  }
+}
+
+//get reviews by userId
+async function getReviewsByUserId(userId) {
+  try {
+    const { rows } = await client.query(
+      `
+        SELECT *
+        FROM reviews
+        WHERE user_id = $1;
+        `,
+      [userId]
+    );
     return rows;
   } catch (error) {
     throw error;
@@ -153,5 +187,9 @@ module.exports = {
   createReviewData,
   updateReviewById,
   deleteReviewById,
-  deleteAllReviews
+  deleteAllReviews,
+  getReviewsByMovieId,
+  getReviewsByUserId
+
+
 };
